@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Drag and Drop</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        .subjects-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .subject-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            cursor: move;
+        }
+        .subject-item.dragging {
+            opacity: 0.5;
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Drag and Drop Subjects</h2>
+        <ul class="subjects-list" id="subjects-list">
+            <li class="subject-item" draggable="true">Mathematics</li>
+            <li class="subject-item" draggable="true">Physics</li>
+            <li class="subject-item" draggable="true">Chemistry</li>
+            <li class="subject-item" draggable="true">Biology</li>
+            <li class="subject-item" draggable="true">Computer Science</li>
+            <li class="subject-item" draggable="true">English</li>
+        </ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
