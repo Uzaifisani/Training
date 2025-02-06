@@ -1,6 +1,6 @@
 function fetchData(callback) {
   setTimeout(() => {
-    const isSuccess = false;
+    const isSuccess = true;
     if (isSuccess) {
       const data = ["Uzaif", "Isani", "Nihal", "Mahek"];
       callback(null, data);
@@ -18,3 +18,11 @@ fetchData((error, data) => {
     console.log("Fetched data:", data);
   }
 });
+
+//Output:
+// condition 1
+// isSuccess = false;
+// Error: Failed to fetch data from the server.
+// condition 2
+// isSuccess = true;
+// Fetched data: [ 'Uzaif', 'Isani', 'Nihal', 'Mahek' ]

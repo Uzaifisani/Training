@@ -44,8 +44,15 @@ BookLibrary.addBook({
 });
 
 console.log(
-  "Books by George Orwell:",
-  BookLibrary.getbookByAuthor("George Orwell")
+  "To Kill a Mockingbird:",
+  BookLibrary.getbookByAuthor("Harper Lee")
 );
 BookLibrary.removeBook("1984");
 console.log("All Books:", BookLibrary.getAllBooks());
+
+// output:
+// PS C:\Users\uzaif\OneDrive\Desktop\CompanyAssignment\Training\06Feb2025\AssignmentNo2> node .\objects.js
+// Book added: "1984" by George Orwell
+// Books by George Orwell: undefined
+// Book removed: "1984"
+// All Books: [ 'The Great Gatsby', 'To Kill a Mockingbird' ]

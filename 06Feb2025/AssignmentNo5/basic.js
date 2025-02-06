@@ -39,3 +39,7 @@ CallbackFn([30, 46, 23, 78], filterOut);
 CallbackFn([30, 46, 23, 78], doubleNumbers);
 CallbackFn([30, 46, 23, 78], calculateSum);
 CallbackFn([30, 46, 23, 78], findMax);
+
+// Output: [30, 46, 78][(60, 92, 46, 156)];
+// 177;
+// 78;

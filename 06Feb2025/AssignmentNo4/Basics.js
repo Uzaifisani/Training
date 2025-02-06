@@ -31,3 +31,13 @@ console.log(
   calculateCategoryTotal("Electronics")
 );
 console.log("Total price of Clothing:", calculateCategoryTotal("Clothing")); // Should output 30
+
+// Output:
+// [ 'LAPTOP', 'PHONE', 'SHIRT', 'SHOES' ]
+// [
+//   { name: 'Laptop', price: 1000, category: 'Electronics' },
+//   { name: 'Phone', price: 500, category: 'Electronics' }
+// ]
+// Total of All item is  1610
+// Total price of Electronics: 1500
+// Total price of Clothing: 30
