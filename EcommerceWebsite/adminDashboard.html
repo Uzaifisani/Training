@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ShopEasy</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#" onclick="allProducts()">Products</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="admin.html">Admin Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="admin-dashboard">
+            <h2>Admin Dashboard</h2>
+            <button id="add-product-btn">Add Product</button>
+            <div id="product-container">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ShopEasy. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="adminDashboard.js"></script>
+</body>
+</html> 
