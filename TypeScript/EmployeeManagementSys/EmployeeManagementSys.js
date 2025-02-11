@@ -66,3 +66,12 @@ console.log("Employee1 salary After Bonus is " + Employee1.calculateBonus());
 console.log("Engineer1 salary After Bonus is " + Engineer1.calculateBonus());
 console.log("Manager1 salary After Bonus is " + Manager1.calculateBonus());
 console.log("Intern1 salary After Bonus is " + Intern1.calculateBonus());
+/*
+OUTPUT :
+PS C:\Users\uzaif\OneDrive\Desktop\Assignment\Training> node .\TypeScript\EmployeeManagementSys.js
+Employee1 salary After Bonus is 17000
+Engineer1 salary After Bonus is 25000
+Manager1 salary After Bonus is 30000
+Intern1 salary After Bonus is 8500
+
+*/ 
