@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Quiz App</title>
+    <style>
+        body {
+            background-color: white;
+            color: black;
+        }
+        .quiz-container {
+            background-color: rgba(166, 123, 240, 0.824);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 50px;
+        }
+        .btn-custom {
+            background-color: #ffffff;
+            color: #007bff;
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container quiz-container">
+        <div id="questionDisplay" class="mb-4 text-center">
+            <h2 id="showQuestion">In the first book a letter from Hogwarts arrives at Privet Drive, but the Dursleys don't want Harry to read it. How old was Harry when he started by Hogwarts?</h2>
+        </div>
+        <div id="answerChoices" class="mb-4">
+            <button id="option1" class="btn btn-custom btn-block">9 years</button>
+            <button id="option2" class="btn btn-custom btn-block">10 years</button>
+            <button id="option3" class="btn btn-custom btn-block">11 years</button>
+        </div>
+        <button id="nextQuestion" onclick="NextQuestionButtonClick()" class="btn btn-success btn-block">Next Question</button>
+        <div id="scoreDisplay" class="mt-4 text-center">
+            <h4>Your Score: <span id="score">0</span></h4>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
