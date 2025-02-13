@@ -57,9 +57,9 @@ function setupCategoryDropdowns(): void {
 }
 
 function addExpense(): void {
-    const expenseAmount: number = Number((document.getElementById('expenseAmount') as HTMLInputElement).value);
-    const categoryOfExpense: ExpenseCategory = (document.getElementById('expenseCategory') as HTMLSelectElement).value as ExpenseCategory;
-    const expenseDesc: string = (document.getElementById('expenseDescription') as HTMLInputElement).value;
+    let expenseAmount: number = Number((document.getElementById('expenseAmount') as HTMLInputElement).value);
+    let categoryOfExpense: ExpenseCategory = (document.getElementById('expenseCategory') as HTMLSelectElement).value as ExpenseCategory;
+    let expenseDesc: string = (document.getElementById('expenseDescription') as HTMLInputElement).value;
     const date: string = (document.getElementById("expenseDate") as HTMLInputElement).value;
      if (!expenseAmount || !categoryOfExpense || !expenseDesc) {
         alert("Please fill in all fields.");
@@ -68,7 +68,10 @@ function addExpense(): void {
     const newExpense: IExpense = { expenseAmount, categoryOfExpense, expenseDesc, date };
     saveExpenseToLocalStorage(newExpense);
     filterOutExpenses();
-   const addExpenseModal = document.getElementById('addExpenseModal') as HTMLDivElement;
+    (document.getElementById('expenseAmount') as HTMLInputElement).value = '';
+    (document.getElementById('expenseCategory') as HTMLSelectElement).value = '';
+    (document.getElementById('expenseDescription') as HTMLInputElement).value = '';
+    const addExpenseModal = document.getElementById('addExpenseModal') as HTMLDivElement;
     const modal = bootstrap.Modal.getInstance(addExpenseModal);
     modal!.hide(); 
    

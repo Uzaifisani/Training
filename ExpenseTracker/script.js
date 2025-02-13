@@ -56,6 +56,9 @@ function addExpense() {
     var newExpense = { expenseAmount: expenseAmount, categoryOfExpense: categoryOfExpense, expenseDesc: expenseDesc, date: date };
     saveExpenseToLocalStorage(newExpense);
     filterOutExpenses();
+    document.getElementById('expenseAmount').value = '';
+    document.getElementById('expenseCategory').value = '';
+    document.getElementById('expenseDescription').value = '';
     var addExpenseModal = document.getElementById('addExpenseModal');
     var modal = bootstrap.Modal.getInstance(addExpenseModal);
     modal.hide();
