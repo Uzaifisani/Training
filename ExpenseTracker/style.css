@@ -1,0 +1,83 @@
+:root {
+     --primary-color: #2c3e50;
+     --secondary-color: #34495e;
+ }
+
+ body {
+     background-color: #f8f9fa;
+ }
+
+ .navbar {
+     background-color: var(--primary-color);
+ }
+
+ .expense-card {
+     background: white;
+     border-radius: 10px;
+     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+     transition: transform 0.2s;
+ }
+
+ .expense-card:hover {
+     transform: translateY(-2px);
+ }
+
+ .amount-label {
+     color: var(--secondary-color);
+     font-weight: 500;
+ }
+
+ .amount-value {
+     font-size: 1.5rem;
+     font-weight: bold;
+     color: var(--primary-color);
+ }
+
+ .btn-set-amount,
+ .btn-add-expense {
+     background-color: var(--primary-color);
+     color: white;
+     border: none;
+     transition: background-color 0.2s;
+ }
+
+ .btn-set-amount:hover,
+ .btn-add-expense:hover {
+     background-color: var(--secondary-color);
+     color: white;
+ }
+
+ .modal-content {
+     border-radius: 15px;
+ }
+
+ .modal-header {
+     background-color: var(--primary-color);
+     color: white;
+     border-top-left-radius: 15px;
+     border-top-right-radius: 15px;
+ }
+
+ .modal-header .btn-close {
+     filter: brightness(0) invert(1);
+ }
+
+ .table {
+     background-color: white;
+     border-radius: 10px;
+     overflow: hidden;
+ }
+
+ .table th {
+     background-color: var(--secondary-color);
+     color: white;
+ }
+
+ .btn-remove {
+     color: #e74c3c;
+     transition: color 0.2s;
+ }
+
+ .btn-remove:hover {
+     color: #c0392b;
+ }
