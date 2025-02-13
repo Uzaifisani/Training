@@ -73,7 +73,7 @@ function createTable(expenses) {
     expenseTableBody.innerHTML = '';
     expenses.forEach(function (expense) {
         var row = document.createElement('tr');
-        row.innerHTML = "\n            <td>".concat(expense.categoryOfExpense, "</td>\n            <td>").concat(expense.expenseDesc, "</td>\n            <td>\u20B9").concat(expense.expenseAmount, "</td>\n            <td>").concat(expense.date, "</td>\n        ");
+        row.innerHTML = "\n            <td>".concat(expense.categoryOfExpense, "</td>\n            <td>").concat(expense.expenseDesc, "</td>\n            <td>\u20B9").concat(expense.expenseAmount, "</td>\n            <td>").concat(expense.date, "</td>\n            <td><button class=\"btn btn-danger btn-sm\" onclick=\"removeExpense('").concat(expense.date, "', '").concat(expense.expenseDesc, "')\">Remove</button></td>\n        ");
         expenseTableBody.appendChild(row);
     });
     calculateTotalAmount(expenses);
@@ -81,4 +81,10 @@ function createTable(expenses) {
 function calculateTotalAmount(expenses) {
     var totalAmount = expenses.reduce(function (sum, expense) { return sum + expense.expenseAmount; }, 0);
     document.getElementById('usedAmount').innerText = "\u20B9".concat(totalAmount);
+}
+function removeExpense(date, description) {
+    var expenses = JSON.parse(localStorage.getItem('expenses') || '[]');
+    var updatedExpenses = expenses.filter(function (expense) { return !(expense.date === date && expense.expenseDesc === description); });
+    localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+    filterOutExpenses(); // Refresh the table
 }

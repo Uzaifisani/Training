@@ -94,6 +94,7 @@ function createTable(expenses: IExpense[]): void {
             <td>${expense.expenseDesc}</td>
             <td>₹${expense.expenseAmount}</td>
             <td>${expense.date}</td>
+            <td><button class="btn btn-danger btn-sm" onclick="removeExpense('${expense.date}', '${expense.expenseDesc}')">Remove</button></td>
         `;
         expenseTableBody.appendChild(row);
     });
@@ -104,4 +105,11 @@ function createTable(expenses: IExpense[]): void {
 function calculateTotalAmount(expenses: IExpense[]): void {
     const totalAmount: number = expenses.reduce((sum: number, expense: IExpense) => sum + expense.expenseAmount, 0);
     (document.getElementById('usedAmount') as HTMLSpanElement).innerText = `₹${totalAmount}`;
+}
+
+function removeExpense(date: string, description: string): void {
+    const expenses: IExpense[] = JSON.parse(localStorage.getItem('expenses') || '[]');
+    const updatedExpenses = expenses.filter(expense => !(expense.date === date && expense.expenseDesc === description));
+    localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+    filterOutExpenses(); // Refresh the table
 }
