@@ -1,3 +1,10 @@
+interface Product {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  price: number;
+}
 document.addEventListener("DOMContentLoaded", () => {
   const productsContainer = document.getElementById("products-container") as HTMLElement;
   const categoryTitle = document.getElementById("category-title") as HTMLElement;
@@ -57,13 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  price: number;
-}
+
 
 const addToCart = (productId: number) => {
   console.log(`Product ${productId} added to cart`);

@@ -1,4 +1,4 @@
-interface Product {
+interface IProduct {
   id: number;
   title: string;
   price: number;
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (productId) {
       axios
-        .get<Product>(`https://fakestoreapi.com/products/${productId}`)
+        .get<IProduct>(`https://fakestoreapi.com/products/${productId}`)
         .then((response) => {
           displayProductDetails(response.data);
         })
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const displayProductDetails = (product: Product) => {
+  const displayProductDetails = (product: IProduct) => {
     productContainer.innerHTML = `
             <div class="product-detail-container">
                 <div class="product-image">

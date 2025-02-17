@@ -1,22 +1,22 @@
-interface CartProduct {
+interface ICartProduct {
   productId: number;
   quantity: number;
 }
 
-interface Product {
+interface IProduct {
   id: number;
   price: number;
   title: string;
   image: string;
 }
 
-interface Cart {
-  products: CartProduct[];
+interface ICart {
+  products: ICartProduct[];
 }
 
 (window as any).cart = {
-  products: [] as CartProduct[],
-} as Cart;
+  products: [] as ICartProduct[],
+} as ICart;
 
 document.addEventListener("DOMContentLoaded", () => {
   const cartContainer:HTMLElement = document.getElementById("cart-container") as HTMLElement;
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const loadCart = async (): Promise<void> => {
     try {
-      const cartResponse = await axios.get<{ products: CartProduct[] }[]>(
+      const cartResponse = await axios.get<{ products: ICartProduct[] }[]>(
         "https://fakestoreapi.com/carts?userId=1"
       );
       const cart = cartResponse.data[0];
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cartItemsContainer.className = "cart-items";
 
       for (const item of (window as any).cart.products) { 
-        const productResponse = await axios.get<Product>(
+        const productResponse = await axios.get<IProduct>(
           `https://fakestoreapi.com/products/${item.productId}`
         );
         const product = productResponse.data;
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadCart();
 });
 
-const createCartItem = (product: Product, item: CartProduct): HTMLElement => {
+const createCartItem = (product: IProduct, item: ICartProduct): HTMLElement => {
   const itemTotal:number = product.price * item.quantity;
   const cartItem:HTMLElement= document.createElement("div");
   cartItem.className = "cart-item";
@@ -79,7 +79,7 @@ const createCartItem = (product: Product, item: CartProduct): HTMLElement => {
 
 const removeFromCart = (productId: number, button: HTMLElement): void => {
   (window as any).cart.products = (window as any).cart.products.filter(
-    (item: CartProduct) => item.productId !== productId
+    (item: ICartProduct) => item.productId !== productId
   );
   const cartItem:HTMLElement |null= button.closest(".cart-item");
   if (cartItem) {

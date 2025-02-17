@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 case 1:
                     cartResponse = _b.sent();
                     cart = cartResponse.data[0];
-                    window.cart.products = cart.products; // Assign fetched products to global cart object
+                    window.cart.products = cart.products;
                     alert("Response Status: " + cartResponse.status);
                     cartItemsContainer = document.createElement("div");
                     cartItemsContainer.className = "cart-items";

@@ -1,4 +1,4 @@
-interface Product{
+interface IProduct{
     id: number;
     image: string;
     title: string;
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const displayProducts = (products: Array<Product>): void => {
+  const displayProducts = (products: Array<IProduct>): void => {
     productContainer.innerHTML = "";
     products.forEach((product) => {
       const productCard = document.createElement("div");
