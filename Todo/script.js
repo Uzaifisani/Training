@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputTodo = document.getElementById("input-todo");
   const buttonTodo = document.getElementById("button-todo");
   const ulTodo = document.getElementById("ul-todo");
-  const deleteAll = document.getElementById('button-delete-all');
+  const deleteAll = document.getElementById("button-delete-all");
 
   let editMode = false;
   let editElement = null;
@@ -37,27 +37,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target.classList.contains("btn-warning")) {
       let confirmation = confirm("Do you want to delete the Task??");
       if (confirmation) {
-         e.target.closest(".list-group-item").remove();
-         saveAllTodo();
-      } 
+        e.target.closest(".list-group-item").remove();
+        saveAllTodo();
+      }
     }
 
     if (e.target.classList.contains("btn-danger")) {
       const li = e.target.closest(".list-group-item");
       const textSpan = li.querySelector(".text-todo");
       const oldText = textSpan.textContent;
-      
-      // Create input field
       const inputField = document.createElement("input");
       inputField.type = "text";
       inputField.className = "form-control text-todo";
       inputField.value = oldText;
-      
-      // Replace span with input
       textSpan.replaceWith(inputField);
       inputField.focus();
-
-      // Handle input blur and enter key
       inputField.addEventListener("keyup", (e) => {
         if (e.key === "Enter") {
           const newText = inputField.value;
@@ -93,11 +87,13 @@ document.addEventListener("DOMContentLoaded", () => {
     allTodos.forEach((task) => createTodo(task));
   };
 
-  deleteAll.addEventListener('click', () => {
-    let confirmation = confirm("Are you sure , you want to delete All the Taks??");
+  deleteAll.addEventListener("click", () => {
+    let confirmation = confirm(
+      "Are you sure , you want to delete All the Taks??"
+    );
     if (confirmation) {
       ulTodo.innerHTML = "";
-    localStorage.removeItem('allTodos');
+      localStorage.removeItem("allTodos");
     }
   });
 
