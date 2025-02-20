@@ -63,7 +63,11 @@ document.addEventListener("DOMContentLoaded", function () {
             var productCard = document.createElement("div");
             productCard.className = "product-card";
             productCard.setAttribute("data-id", product.id.toString());
-            productCard.innerHTML = "\n                <img src=\"".concat(product.image, "\" alt=\"").concat(product.title, "\">\n                <h3>").concat(product.title, "</h3>\n                <p>").concat(product.description, "</p>\n                <span class=\"price\">$").concat(product.price, "</span>\n                <button onclick=\"deleteProduct(").concat(product.id, ")\">Delete</button>\n            ");
+            productCard.innerHTML = "\n                <img src=\"".concat(product.image, "\" alt=\"").concat(product.title, "\">\n                <h3>").concat(product.title, "</h3>\n                <p>").concat(product.description, "</p>\n                <span class=\"price\">$").concat(product.price, "</span>\n                <<button class=\"delete-btn\">Delete</button>\n          ");
+            var deleteButton = productCard.querySelector(".delete-btn");
+            deleteButton.addEventListener("click", function () {
+                deleteProduct(product.id);
+            });
             productContainer.appendChild(productCard);
         });
     };

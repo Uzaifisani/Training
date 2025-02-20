@@ -28,8 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 <h3>${product.title}</h3>
                 <p>${product.description}</p>
                 <span class="price">$${product.price}</span>
-                <button onclick="deleteProduct(${product.id})">Delete</button>
-            `;
+                <<button class="delete-btn">Delete</button>
+          `;
+    const deleteButton = productCard.querySelector(".delete-btn") as HTMLButtonElement;
+    deleteButton.addEventListener("click", () => {
+      deleteProduct(product.id);
+    });
       productContainer.appendChild(productCard);
     });
   };

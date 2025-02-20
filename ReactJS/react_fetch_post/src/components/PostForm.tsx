@@ -1,4 +1,3 @@
-
 type Post = {
   userId: number;
   id?: number;
