@@ -1,11 +1,12 @@
 import './App.css'
-import TodoMain from './components/TodoMain';
-import { TodoProvider, useTodoContext } from './context/TodoContext';
+
+import { TodoProvider } from "./context/TodoContext";
+import TodoMain from "./components/TodoMain";
 
 function App() {
     return (
         <TodoProvider>
-            <TodoMain/>
+            <TodoMain />
         </TodoProvider>
     );
 }
