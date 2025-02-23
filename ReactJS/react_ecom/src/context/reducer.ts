@@ -1,18 +1,21 @@
 import { IProduct, ICartItem, IUser } from "../types/index";
 
 export interface State {
+  category: String[];
   products: IProduct[];
   cart: ICartItem[];
   user: IUser | null;
 }
 
 export const initialState: State = {
+  category:[],
   products: [],
   cart: [],
   user: null,
 };
 
 export type Action =
+  | {type: "SET CATEGORIES" ,payload:String[]}
   | { type: "SET_PRODUCTS"; payload: IProduct[] }
   | { type: "ADD_TO_CART"; payload: ICartItem }
   | { type: "REMOVE_FROM_CART"; payload: number }
@@ -21,6 +24,8 @@ export type Action =
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case "SET CATEGORIES":
+      return { ...state, category: action.payload };
     case "SET_PRODUCTS":
       return { ...state, products: action.payload };
     case "ADD_TO_CART":

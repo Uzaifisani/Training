@@ -1,12 +1,9 @@
-export interface ICategory{
-  category: string;
-}
 export interface IProduct {
     id: number;
     title: string;
     price: number;
     description: string;
-    category: ICategory;
+    category: string;
     image: string;
   }
   
