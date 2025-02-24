@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IProduct } from "../types/index";
+import { IProduct, IUser } from "../types/index";
 
 const API_URL = "https://fakestoreapi.com";
 
@@ -18,4 +18,18 @@ export const fetchProductCategories = async (): Promise<String[]> => {
 export const fetchProductByCategory = async (category:String): Promise<IProduct[]> => {
     const response = await axios.get<IProduct[]>(`${API_URL}/products/category/${category}`);
     return response.data;
+}
+
+export const fetchUserData = async (): Promise<IUser[]> => {
+    const response = await axios.get<IUser[]>(`${API_URL}/users`);
+    return response.data;
+}
+export const deleteProductId = async (id: number): Promise<number> => {
+    const response = await axios.delete<number>(`${API_URL}/products/${id}`);
+    return response.status;
+}
+
+export const addProductApi = async (product: IProduct): Promise<number> => {
+    const response = await axios.post<number>(`${API_URL}/products`, product);
+    return response.status;
 }

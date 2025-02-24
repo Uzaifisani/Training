@@ -1,26 +1,22 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import { fetchProductsBasedId } from "../services/api";
 import { ICartItem, IProduct } from "../types";
 import { GlobalContext } from "../context/GlobalContext";
+import { fetchProductById } from "../scripts/products";
 
 const ViewProduct = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<IProduct | null>(null);
   const { dispatch } = useContext(GlobalContext);
-  const [cartItem, setCartItem] = useState<ICartItem | null>(null);
+  const [, setCartItem] = useState<ICartItem | null>(null);
   useEffect(() => {
-    const fetchProductById = async (pid: number) => {
-      try {
-        const response: IProduct = await fetchProductsBasedId(pid);
-          setProduct(response);
-      } catch (error) {
-        console.error("Failed to fetch product", error);
+    const fetchAndSetProduct = async () => {
+      if (id) {
+        const product = await fetchProductById(Number(id));
+        setProduct(product || null);
       }
     };
-    if (id) {
-      fetchProductById(Number(id));
-    }
+    fetchAndSetProduct();
   }, [id]);
 
   const handleAddToCart = () => {

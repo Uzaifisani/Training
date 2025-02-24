@@ -1,25 +1,26 @@
-import { IProduct, ICartItem, IUser } from "../types/index";
+import { IProduct, ICartItem } from "../types/index";
 
 export interface State {
   category: String;
   products: IProduct[];
   cart: ICartItem[];
-  user: IUser | null;
+  isAuthenticated: boolean;
 }
 
 export const initialState: State = {
-  category:"all",
+  category: "all",
   products: [],
   cart: [],
-  user: null,
+  isAuthenticated: false,
+  // user: null
 };
 
 export type Action =
-  | {type: "SET_SELECTED_CATEGORY" ,payload:String}
+  | { type: "SET_SELECTED_CATEGORY"; payload: String }
   | { type: "SET_PRODUCTS"; payload: IProduct[] }
   | { type: "ADD_TO_CART"; payload: ICartItem }
   | { type: "REMOVE_FROM_CART"; payload: number }
-  | { type: "LOGIN"; payload: IUser }
+  | { type: "LOGIN" }
   | { type: "LOGOUT" };
 
 export const reducer = (state: State, action: Action): State => {
@@ -33,9 +34,9 @@ export const reducer = (state: State, action: Action): State => {
     case "REMOVE_FROM_CART":
       return { ...state, cart: state.cart.filter(item => item.product.id !== action.payload) };
     case "LOGIN":
-      return { ...state, user: action.payload };
+      return { ...state, isAuthenticated: true };
     case "LOGOUT":
-      return { ...state, user: null };
+      return { ...state, isAuthenticated: false };
     default:
       return state;
   }

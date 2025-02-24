@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalContext";
-import { IProduct } from "../types";
-import { fetchProductByCategory, fetchProducts } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { fetchProductsData } from "../scripts/products";
+//import { fetchProductsData } from "../scripts/products";
 
 const ProductList = () => {
   const { state ,dispatch} = useContext(GlobalContext);
@@ -11,20 +11,7 @@ const ProductList = () => {
     const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProductsData = async () => {
-        try {
-            if (selectedCategory === "all") {
-                const products: IProduct[] = await fetchProducts();
-                dispatch({ type: 'SET_PRODUCTS', payload: products });
-            } else {
-                const products: IProduct[] = await fetchProductByCategory(selectedCategory);
-                dispatch({ type: 'SET_PRODUCTS', payload: products });
-            }
-      } catch (error) {
-        console.error("Failed to fetch products", error);
-      }
-    };
-    fetchProductsData();
+    fetchProductsData(selectedCategory,dispatch);
   }, [selectedCategory, dispatch]);
     
     const handleAddToCart = (id: number) => {

@@ -13,6 +13,8 @@ export interface ICartItem {
 }
 
 export interface IUser {
+  id: number;
+  email: string;
   username: string;
-  isAdmin: boolean;
+  password: string;
 }
