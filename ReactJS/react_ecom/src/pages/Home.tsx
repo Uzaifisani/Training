@@ -1,25 +1,30 @@
-import { Link } from "react-router-dom"
 import { fetchProductCategories } from "../services/api";
 import { useState, useEffect, useContext, useCallback } from "react";
 import { GlobalContext } from "../context/GlobalContext";
+import ProductList from "../component/ProductList";
 
 
 const Home = () => {
   const { dispatch } = useContext(GlobalContext);
   const [categories, setCategories] = useState<String[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   
     const fetchCategories = useCallback(async () => {
       try {
         const response = await fetchProductCategories();
-        setCategories(response);
-        dispatch({ type: "SET CATEGORIES", payload: response });
+        setCategories(["all",...response]);
       } catch (error) {
         console.error("Failed to fetch categories", error);
       }
     }, [dispatch]);
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+    useEffect(() => {
+      fetchCategories();
+    }, []);
+   
+  const handleCategoryChange = (category: string) => {
+      setSelectedCategory(category);
+    dispatch({ type: "SET_SELECTED_CATEGORY", payload: selectedCategory });
+    }
 
   return (
     <>
@@ -32,14 +37,15 @@ const Home = () => {
         <h2 className="text-4xl text-center font-bold mb-6">Shop by Category</h2>
         <div className="flex-wrap space-x-28 text-center p-2 m-2 mt-2">
         {categories.map((category: String,index:number) => (
-        <Link
+        <button
           key={`category-${index}`}
-            to={`/category/${category}`}
-            className="text-black text-xl font-bold border-black border-2 p-2 hover:underline hover:bg-gray-500"
+            onClick={()=>handleCategoryChange(`${category}`)}
+            className="text-black text-xl font-bold border-black border-2 p-2 m-1 hover:underline hover:bg-gray-500"
           >
             {category}
-          </Link>
+          </button>
         ))}
+          <ProductList />
         </div>
       </div>
     </>
