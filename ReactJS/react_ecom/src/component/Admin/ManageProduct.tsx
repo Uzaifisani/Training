@@ -6,7 +6,7 @@ import { IProduct } from "../../types";
 
 const ManageProduct = () => {
   const selectedCategory: String = "all";
-  const { state, dispatch } = useContext(GlobalContext);
+  const { dispatch } = useContext(GlobalContext);
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
   const [editingProduct, setEditingProduct] = useState<IProduct | null>(null);
 
