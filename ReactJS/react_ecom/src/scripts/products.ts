@@ -1,4 +1,4 @@
-import {  addProductApi, deleteProductId, fetchProductByCategory, fetchProducts, fetchProductsBasedId } from "../services/api";
+import {  addProductApi, deleteProductId, fetchProductByCategory, fetchProducts, fetchProductsBasedId, UpdateProductApi } from "../services/api";
 import { IProduct } from "../types";
 
 export const fetchProductById = async (pid: number): Promise<IProduct | null> => {
@@ -28,6 +28,11 @@ export const fetchProductsData = async (selectedCategory: String, dispatch: Reac
 export const addProduct = async (product: IProduct) => {
     const responseCode = await addProductApi(product);
     return responseCode;
+}
+
+export const editProduct = async (id: number, product: IProduct)=>{
+  const responseCode = await UpdateProductApi(id, product);
+  return responseCode;
 }
 
 export const deleteProductById = async (id: number) => {

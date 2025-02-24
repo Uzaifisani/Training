@@ -33,3 +33,8 @@ export const addProductApi = async (product: IProduct): Promise<number> => {
     const response = await axios.post<number>(`${API_URL}/products`, product);
     return response.status;
 }
+
+export const UpdateProductApi = async (id:number,product: IProduct): Promise<number> => {
+    const response = await axios.patch<number>(`${API_URL}/products/${id}`, product);
+    return response.status;
+}

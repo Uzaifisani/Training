@@ -21,7 +21,8 @@ export type Action =
   | { type: "ADD_TO_CART"; payload: ICartItem }
   | { type: "REMOVE_FROM_CART"; payload: number }
   | { type: "LOGIN" }
-  | { type: "LOGOUT" };
+  | { type: "LOGOUT" }
+  | { type: "UPDATE_PRODUCT"; payload: IProduct };
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -37,6 +38,9 @@ export const reducer = (state: State, action: Action): State => {
       return { ...state, isAuthenticated: true };
     case "LOGOUT":
       return { ...state, isAuthenticated: false };
+    case "UPDATE_PRODUCT":
+      return {...state,products: state.products.map(product =>product.id === action.payload.id ? action.payload : product)
+      };
     default:
       return state;
   }
