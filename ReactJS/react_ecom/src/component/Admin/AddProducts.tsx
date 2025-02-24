@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IProduct } from "../../types";
 import { addProduct } from "../../scripts/products";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const AddProducts = () => {
   const [product, setProduct] = useState<IProduct>({
@@ -12,6 +13,14 @@ const AddProducts = () => {
     image: ""
   });
 
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(addProduct, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["products"]);
+    }
+  });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
@@ -19,8 +28,8 @@ const AddProducts = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const status = await addProduct(product);
-    if (status === 200) {
+    mutation.mutate(product);
+    if (mutation.isSuccess) {
       alert("Product added successfully");
       setProduct({
         id: 0,

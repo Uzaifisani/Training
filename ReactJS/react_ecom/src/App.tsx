@@ -9,6 +9,7 @@ import Login from './component/Admin/Login'
 import AdminDashboard from './component/Admin/AdminDashboard'
 import ProtectedRoute from './context/ProtectedRoute'
 
+
 function App() {
   return (
     <GlobalProvider>

@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { deleteProductById, fetchProductsData, editProduct } from "../../scripts/products";
 import { GlobalContext } from "../../context/GlobalContext";
 import { IProduct } from "../../types";
@@ -6,14 +7,18 @@ import { IProduct } from "../../types";
 const ManageProduct = () => {
   const selectedCategory: String = "all";
   const { state, dispatch } = useContext(GlobalContext);
-  const products = state.products;
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
   const [editingProduct, setEditingProduct] = useState<IProduct | null>(null);
 
-  useEffect(() => {
-    fetchProductsData(selectedCategory, dispatch);
-  }, [selectedCategory, dispatch]);
+  const { data: products = [], isLoading, error } = useQuery<IProduct[]>(
+    ["products", selectedCategory],
+    () => fetchProductsData(selectedCategory), {
+      staleTime:Infinity
+    }
+    
+  );
 
+  
   const deleteProduct = async (id: number) => {
     const status: number = await deleteProductById(id);
     if (status === 200) {
@@ -23,7 +28,6 @@ const ManageProduct = () => {
   }
 
   const handleEdit = (product: IProduct) => {
-    console.log(product.id);
     setEditingProductId(product.id);
     setEditingProduct(product);
   };
@@ -43,12 +47,14 @@ const ManageProduct = () => {
         dispatch({ type: 'UPDATE_PRODUCT', payload: editingProduct });
         setEditingProductId(null);
         setEditingProduct(null);
-       
       } else {
         alert("Failed to update product");
       }
     }
   };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading products</div>;
 
   return (
     <div className="max-w-4xl mx-auto">

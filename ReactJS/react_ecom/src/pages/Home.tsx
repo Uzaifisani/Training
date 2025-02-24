@@ -1,30 +1,25 @@
 import { fetchProductCategories } from "../services/api";
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useContext } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 import ProductList from "../component/ProductList";
-
+import { useQuery } from "@tanstack/react-query";
 
 const Home = () => {
   const { dispatch } = useContext(GlobalContext);
-  const [categories, setCategories] = useState<String[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  
-    const fetchCategories = useCallback(async () => {
-      try {
-        const response = await fetchProductCategories();
-        setCategories(["all",...response]);
-      } catch (error) {
-        console.error("Failed to fetch categories", error);
-      }
-    }, [dispatch]);
-    useEffect(() => {
-      fetchCategories();
-    }, []);
-   
+  const [, setSelectedCategory] = useState<string>("all");
+
+  const { data: categories = [], isLoading, error } = useQuery<String[]>(
+    ["categories"],
+    fetchProductCategories
+  );
+
   const handleCategoryChange = (category: string) => {
-      setSelectedCategory(category);
-    dispatch({ type: "SET_SELECTED_CATEGORY", payload: selectedCategory });
-    }
+    setSelectedCategory(category);
+    dispatch({ type: "SET_SELECTED_CATEGORY", payload: category });
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading categories</div>;
 
   return (
     <>
@@ -36,20 +31,20 @@ const Home = () => {
       <div className="mb-8">
         <h2 className="text-4xl text-center font-bold mb-6">Shop by Category</h2>
         <div className="flex-wrap space-x-28 text-center p-2 m-2 mt-2">
-        {categories.map((category: String,index:number) => (
-        <button
-          key={`category-${index}`}
-            onClick={()=>handleCategoryChange(`${category}`)}
-            className="text-black text-xl font-bold border-black border-2 p-2 m-1 hover:underline hover:bg-gray-500"
-          >
-            {category}
-          </button>
-        ))}
+          {["all", ...categories].map((category: String, index: number) => (
+            <button
+              key={`category-${index}`}
+              onClick={() => handleCategoryChange(`${category}`)}
+              className="text-black text-xl font-bold border-black border-2 p-2 m-1 hover:underline hover:bg-gray-500"
+            >
+              {category}
+            </button>
+          ))}
           <ProductList />
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
