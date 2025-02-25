@@ -18,6 +18,18 @@ const AddProducts = () => {
   const mutation = useMutation(addProduct, {
     onSuccess: () => {
       queryClient.invalidateQueries(["products"]);
+      alert("Product added successfully");
+      setProduct({
+        id: 0,
+        title: "",
+        price: 0,
+        description: "",
+        category: "",
+        image: ""
+      });
+    },
+    onError: (err) => {
+      alert(err);
     }
   });
 
@@ -29,19 +41,6 @@ const AddProducts = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     mutation.mutate(product);
-    if (mutation.isSuccess) {
-      alert("Product added successfully");
-      setProduct({
-        id: 0,
-        title: "",
-        price: 0,
-        description: "",
-        category: "",
-        image: ""
-      });
-    } else {
-      alert("Failed to add product");
-    }
   };
 
   return (
