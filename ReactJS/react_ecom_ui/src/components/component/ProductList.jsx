@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 
+
 const ProductList = () => {
   const { state } = useContext(GlobalContext);
   const [sortOrder, setSortOrder] = useState('asc');
