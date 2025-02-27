@@ -32,3 +32,18 @@ export const UpdateProductApi = async (id, product) => {
   const response = await axios.patch(`${API_URL}/products/${id}`, product);
   return response.status;
 };
+
+//Cart
+export const getCartApi= async(id)=>{
+  const response= await axios.get(`${API_URL}/carts/1`);
+  return response.data;
+}
+
+export const addToCartApi=async(product)=>{
+  const response=await axios.put(`${API_URL}/carts/1`,product);
+  return response.status;
+}
+
+export const removeFromCart= async(cart)=>{
+  const response = await axios.put(`${API_URL}/carts/1`,cart);
+}

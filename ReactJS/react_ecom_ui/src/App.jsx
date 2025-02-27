@@ -10,6 +10,7 @@ import AdminLogin from './components/component/Admin/AdminLogin'
 import AdminDashboard from './components/component/Admin/AdminDashboard'
 import ProtectedRoute from './context/ProtectedRoutes'
 import AddProduct from './components/component/Admin/AddProduct'
+import Cart from './pages/Cart'
 
 function App() {
 
@@ -24,8 +25,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/categories/:category" element={<Categories />} />
               <Route path='/products/:id' element={<ViewProduct/>}/>
-              <Route path="/cart" element={<h1>Test</h1>} />
               <Route path="/admin" element={<AdminLogin/>} />
+              <Route path="/cart" element={<Cart/>} />
               <Route path="/adminDashboard" element={
                 <ProtectedRoute>
                   <AdminDashboard />
