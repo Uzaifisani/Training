@@ -84,7 +84,6 @@ const Register = () => {
         </Heading>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Email Field */}
           <FormControl id="email" isInvalid={!!errors.email} mb={4}>
             <FormLabel>Email address</FormLabel>
             <Input
@@ -100,8 +99,6 @@ const Register = () => {
             />
             <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
           </FormControl>
-
-          {/* Password Field */}
           <FormControl id="password" isInvalid={!!errors.password} mb={4}>
             <FormLabel>Password</FormLabel>
             <InputGroup>
@@ -125,8 +122,6 @@ const Register = () => {
             </InputGroup>
             <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
           </FormControl>
-
-          {/* Confirm Password Field */}
           <FormControl id="confirmPassword" isInvalid={!!errors.confirmPassword} mb={4}>
             <FormLabel>Confirm Password</FormLabel>
             <InputGroup>
@@ -150,14 +145,10 @@ const Register = () => {
             </InputGroup>
             <FormErrorMessage>{errors.confirmPassword?.message}</FormErrorMessage>
           </FormControl>
-
-          {/* Submit Button */}
           <Button type="submit" colorScheme="blue" width="full" mt={4}>
             Register
           </Button>
         </form>
-
-        {/* Login Link */}
         <Text mt={4} textAlign="center" fontSize="sm">
           Already have an account?{" "}
           <Link  to="/">

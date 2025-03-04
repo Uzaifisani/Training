@@ -1,31 +1,22 @@
 import { Box, Flex, Heading, Avatar, Text, Badge, VStack, useColorModeValue, Button, HStack, Select } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { userPage } from "../apis/api";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useUserStore } from "../store/userStore";
 import Loading from "./LoadingBar";
-import { User } from "../types";
 
 const RecentUsers = () => {
   const bgColor = useColorModeValue("white", "gray.700");
   const textColor = useColorModeValue("gray.800", "white");
   const borderColor = useColorModeValue("gray.200", "gray.600");
-  const [pg, setPg] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(4);
-  const [users, setUsers] = useState<User[]>([]);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["user", pg, limit],
-    queryFn: () => userPage(pg, limit),
-  });
-
+  const { users, page, limit, totalPages, setPage, setLimit, fetchUsers } = useUserStore();
   useEffect(() => {
-    if (data && data.data) {
-      setUsers(data.data);
-    }
-  }, [data]);
+    setPage(1);
+  }, []);
+  useEffect(() => {
+    fetchUsers();
+  }, [page, limit]);
 
-  if (isLoading) return <Loading />;
-  if (isError) return <h1 className="text-center">Error Occurred While Fetching the Data</h1>;
+  if (!users.length) return <Loading />;
 
   return (
     <>
@@ -51,11 +42,11 @@ const RecentUsers = () => {
           ))}
         </VStack>
         <HStack mt={4} justifyContent="space-between">
-          <Button onClick={() => setPg((prev) => Math.max(prev - 1, 1))} isDisabled={pg === 1}>
+          <Button onClick={() => setPage(Math.max(page - 1, 1))} isDisabled={page === 1}>
             Previous
           </Button>
-          <Text>Page {pg}</Text>
-          <Button onClick={() => setPg((prev) => prev + 1)} isDisabled={users.length < limit}>
+          <Text>Page {page}</Text>
+          <Button onClick={() => setPage(page + 1)} isDisabled={page === totalPages}>
             Next
           </Button>
         </HStack>

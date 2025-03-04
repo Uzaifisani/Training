@@ -46,3 +46,13 @@ export interface LoginRegisterFormValues {
   export interface SingleUserResponse {
     data: User;
   }
+  export interface UserState {
+    users: User[];
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    setPage: (page: number) => void;
+    setLimit: (limit: number) => void;
+    fetchUsers: () => Promise<void>;
+  }
