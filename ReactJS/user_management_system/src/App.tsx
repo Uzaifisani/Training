@@ -19,7 +19,11 @@ function App() {
           <DashBoard/>
           </ProtectedRoute>}
           />
-
+          <Route path='/dashboard/users' element={
+          <ProtectedRoute>
+          <DashBoard/>
+          </ProtectedRoute>}
+          />
       </Routes>
      </Router>
     </>

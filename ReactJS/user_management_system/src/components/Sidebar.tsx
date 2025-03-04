@@ -79,7 +79,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ onClose, ...rest }) => 
       <NavItem icon={FiHome} path="/dashboard">
         Dashboard
       </NavItem>
-      <NavItem icon={FiUser} path="/user">
+      <NavItem icon={FiUser} path="/dashboard/users">
         User
       </NavItem>
       <NavItem icon={FiLogOut} path="/" onClick={logout}>
