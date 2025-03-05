@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Avatar, Text, Badge, VStack, useColorModeValue, Button, HStack, Select } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useUserStore } from "../store/userStore";
-import Loading from "./LoadingBar";
+import Loading from "./sides/LoadingBar";
 
 const RecentUsers = () => {
   const bgColor = useColorModeValue("white", "gray.700");

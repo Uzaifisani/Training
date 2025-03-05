@@ -56,3 +56,15 @@ export interface LoginRegisterFormValues {
     setLimit: (limit: number) => void;
     fetchUsers: () => Promise<void>;
   }
+
+ export interface UserJob{
+  name:string;
+  job:string;
+ }
+
+ export interface UserJobResponse{
+  name:string;
+  job:string;
+  id:number;
+ }
+

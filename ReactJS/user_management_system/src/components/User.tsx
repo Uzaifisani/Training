@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -11,48 +11,72 @@ import {
   Tr,
   Th,
   Td,
-  Avatar,
   IconButton,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  Text,
   useColorModeValue,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { FiMoreVertical, FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
-import { useUserStore } from "../store/userStore";
-import Loading from "./LoadingBar";
+import { useUserJobStore } from "../store/userJobStore";
+import AddJobModal from "./AddJob";
+import ViewUser from "./ViewUser";
+import { useMutation } from "@tanstack/react-query";
+import { deleteUser } from "../apis/api";
+import { UserJobResponse } from "../types";
 
 const UserTable = () => {
   const [search, setSearch] = useState("");
+  const [selectedUser, setSelectedUser] = useState<UserJobResponse|null>(null);
   const bgColor = useColorModeValue("white", "gray.700");
   const textColor = useColorModeValue("gray.800", "white");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isViewOpen,
+    onOpen: onViewOpen,
+    onClose: onViewClose,
+  } = useDisclosure();
+  const toast = useToast();
+  const { userJobs, deleteUserJob } = useUserJobStore();
 
-  const { users, page, limit, totalPages, setPage, fetchUsers } = useUserStore();
-
-  useEffect(() => {
-    setPage(1);
-  }, []);
-
-  useEffect(() => {
-    fetchUsers();
-  }, [page, limit]);
-
-  const filteredUsers = users.filter((user) =>
-    `${user.first_name} ${user.last_name}`.toLowerCase().includes(search.toLowerCase())
+  const filteredJobs = userJobs.filter((job) =>
+    job.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (!users.length) return <Loading />;
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteUser(id),
+    onSuccess: (res: number, id) => {
+      toast({
+        title: `User id : ${id} deleted Successfully`,
+        description: `Status Code : ${res}`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      deleteUserJob(id);
+    }
+  });
+
+  const deleteHandler = (id: number) => {
+    deleteMutation.mutate(id);
+  };
+
+  const viewHandler = (user:UserJobResponse) => {
+    setSelectedUser(user);
+    onViewOpen();
+  };
 
   return (
     <Box p={6} bg={bgColor} minH="100vh">
       <Flex justify="space-between" align="center" mb={4}>
-        <Heading size="lg" color={textColor}>Users</Heading>
-        <Button colorScheme="blue">Add User</Button>
+        <Heading size="lg" color={textColor}>Jobs</Heading>
+        <Button colorScheme="blue" onClick={onOpen}>Add Job</Button>
       </Flex>
       <Input
-        placeholder="Search users..."
+        placeholder="Search jobs..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         mb={4}
@@ -63,21 +87,19 @@ const UserTable = () => {
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th color={textColor}>Avatar</Th>
-              <Th color={textColor}>Name</Th>
-              <Th color={textColor}>Email</Th>
+              <Th color={textColor}>ID</Th>
+              <Th color={textColor}>Job Name</Th>
+              <Th color={textColor}>Job</Th>
               <Th textAlign="right" color={textColor}>Actions</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {filteredUsers.length > 0 ? (
-              filteredUsers.map((user) => (
-                <Tr key={user.id}>
-                  <Td>
-                    <Avatar name={`${user.first_name} ${user.last_name}`} src={user.avatar} />
-                  </Td>
-                  <Td color={textColor}>{`${user.first_name} ${user.last_name}`}</Td>
-                  <Td color={textColor}>{user.email}</Td>
+            {filteredJobs.length > 0 ? (
+              filteredJobs.map((job) => (
+                <Tr key={job.id}>
+                  <Td color={textColor}>{job.id}</Td>
+                  <Td color={textColor}>{job.name}</Td>
+                  <Td color={textColor}>{job.job}</Td>
                   <Td textAlign="right">
                     <Menu>
                       <MenuButton
@@ -86,9 +108,9 @@ const UserTable = () => {
                         variant="ghost"
                       />
                       <MenuList>
-                        <MenuItem icon={<FiEye />}>View</MenuItem>
-                        <MenuItem icon={<FiEdit />}>Edit</MenuItem>
-                        <MenuItem icon={<FiTrash2 />} color="red.500">
+                        <MenuItem icon={<FiEye />} onClick={() => viewHandler(job)}>View</MenuItem>
+                        <MenuItem icon={<FiEdit />} onClick={() => viewHandler(job)}>Edit</MenuItem>
+                        <MenuItem icon={<FiTrash2 />} color="red.500" onClick={() => deleteHandler(job.id)}>
                           Delete
                         </MenuItem>
                       </MenuList>
@@ -99,24 +121,16 @@ const UserTable = () => {
             ) : (
               <Tr>
                 <Td colSpan={4} textAlign="center" color={textColor}>
-                  No users found
+                  No jobs found
                 </Td>
               </Tr>
             )}
           </Tbody>
         </Table>
       </Box>
-      <Flex justify="space-between" mt={4} align="center">
-        <Text fontSize="sm" color={textColor}>Showing {filteredUsers.length} of {users.length} users</Text>
-        <Flex>
-          <Button size="sm" variant="ghost" onClick={() => setPage(Math.max(page - 1, 1))} isDisabled={page === 1}>
-            &lt; Previous
-          </Button>
-          <Button size="sm" variant="ghost" ml={2} onClick={() => setPage(page + 1)} isDisabled={page === totalPages}>
-            Next &gt;
-          </Button>
-        </Flex>
-      </Flex>
+
+      <AddJobModal isOpen={isOpen} onClose={onClose} />
+      <ViewUser isOpen={isViewOpen} onClose={onViewClose} user={selectedUser} />
     </Box>
   );
 };
