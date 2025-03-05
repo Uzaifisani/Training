@@ -18,23 +18,56 @@ import {
   MenuItem,
   useColorModeValue,
   useDisclosure,
-  Text,
+  useToast,
 } from "@chakra-ui/react";
 import { FiMoreVertical, FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
 import { useUserJobStore } from "../store/userJobStore";
 import AddJobModal from "./AddJob";
+import ViewUser from "./ViewUser";
+import { useMutation } from "@tanstack/react-query";
+import { deleteUser } from "../apis/api";
+import { UserJobResponse } from "../types";
 
 const UserTable = () => {
   const [search, setSearch] = useState("");
+  const [selectedUser, setSelectedUser] = useState<UserJobResponse|null>(null);
   const bgColor = useColorModeValue("white", "gray.700");
   const textColor = useColorModeValue("gray.800", "white");
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const { userJobs } = useUserJobStore();
+  const {
+    isOpen: isViewOpen,
+    onOpen: onViewOpen,
+    onClose: onViewClose,
+  } = useDisclosure();
+  const toast = useToast();
+  const { userJobs, deleteUserJob } = useUserJobStore();
 
   const filteredJobs = userJobs.filter((job) =>
     job.name.toLowerCase().includes(search.toLowerCase())
   );
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteUser(id),
+    onSuccess: (res: number, id) => {
+      toast({
+        title: `User id : ${id} deleted Successfully`,
+        description: `Status Code : ${res}`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      deleteUserJob(id);
+    }
+  });
+
+  const deleteHandler = (id: number) => {
+    deleteMutation.mutate(id);
+  };
+
+  const viewHandler = (user:UserJobResponse) => {
+    setSelectedUser(user);
+    onViewOpen();
+  };
 
   return (
     <Box p={6} bg={bgColor} minH="100vh">
@@ -75,9 +108,9 @@ const UserTable = () => {
                         variant="ghost"
                       />
                       <MenuList>
-                        <MenuItem icon={<FiEye />}>View</MenuItem>
-                        <MenuItem icon={<FiEdit />}>Edit</MenuItem>
-                        <MenuItem icon={<FiTrash2 />} color="red.500">
+                        <MenuItem icon={<FiEye />} onClick={() => viewHandler(job)}>View</MenuItem>
+                        <MenuItem icon={<FiEdit />} onClick={() => viewHandler(job)}>Edit</MenuItem>
+                        <MenuItem icon={<FiTrash2 />} color="red.500" onClick={() => deleteHandler(job.id)}>
                           Delete
                         </MenuItem>
                       </MenuList>
@@ -97,6 +130,7 @@ const UserTable = () => {
       </Box>
 
       <AddJobModal isOpen={isOpen} onClose={onClose} />
+      <ViewUser isOpen={isViewOpen} onClose={onViewClose} user={selectedUser} />
     </Box>
   );
 };

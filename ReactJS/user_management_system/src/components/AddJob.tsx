@@ -11,7 +11,6 @@ import {
   Input,
   Button,
   Text,
-  Toast,
   useToast,
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -26,7 +25,7 @@ interface AddJobModalProps {
 }
 
 const AddJobModal: React.FC<AddJobModalProps> = ({ isOpen, onClose }) => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<UserJob>();
+  const { register, handleSubmit, formState: { errors } ,reset} = useForm<UserJob>();
   const {addUserJob}= useUserJobStore();
   const toast= useToast();
 

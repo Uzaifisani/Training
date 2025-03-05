@@ -20,3 +20,13 @@ export const createUser= async(userCreds:UserJob):Promise<UserJobResponse>=>{
   const response= await axios.post<UserJobResponse>(`https://reqres.in/api/users`,userCreds);
   return response.data as UserJobResponse;
 }
+
+export const deleteUser= async(id:number):Promise<number>=>{
+  const response=await axios.delete<number>(`https://reqres.in/api/users/${id}`);
+  return response.status;
+}
+
+export const updateUser= async(id:number,userCreds:UserJob):Promise<UserJob>=>{
+  const response = await axios.put<UserJob>(`https://reqres.in/api/users/${id}`,userCreds);
+  return response.data as UserJob;
+}

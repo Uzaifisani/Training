@@ -1,6 +1,6 @@
 import { Box, useDisclosure } from "@chakra-ui/react";
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
+import Header from "../components/sides/Header";
+import Sidebar from "../components/sides/Sidebar";
 import RecentUsers from "../components/RecentUsers";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";

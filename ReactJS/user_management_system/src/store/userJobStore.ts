@@ -16,3 +16,4 @@ export const useUserJobStore = create<UserJobState>((set) => ({
     userJobs: state.userJobs.map((job) => (job.id === id ? { ...job, ...updatedJob } : job)),
   })),
 }));
+

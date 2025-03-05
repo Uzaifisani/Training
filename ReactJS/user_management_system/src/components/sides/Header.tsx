@@ -20,7 +20,7 @@ import {
   MoonIcon,
   SunIcon,
 } from '@chakra-ui/icons';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '../../store/authStore';
 import { useNavigate } from 'react-router-dom';
 
 

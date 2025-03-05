@@ -14,8 +14,9 @@ import {
 } from '@chakra-ui/react';
 import { FiHome, FiUser, FiLogOut } from 'react-icons/fi';
 import { Link as RouterLink } from 'react-router-dom';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '../../store/authStore';
 import { useNavigate } from 'react-router-dom';
+
 
 interface SidebarProps {
   isOpen: boolean;
@@ -23,6 +24,12 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+  const {logout:performLogout}=useAuthStore();
+  const navigate= useNavigate();
+  const logout=()=>{
+    performLogout();
+    navigate("/");
+}
   return (
     <Box>
       <SidebarContent

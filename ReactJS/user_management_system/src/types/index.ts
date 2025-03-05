@@ -67,3 +67,4 @@ export interface LoginRegisterFormValues {
   job:string;
   id:number;
  }
+
