@@ -1,9 +1,10 @@
-import { Box, Flex, Heading, Avatar, Text, Button, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Heading, Avatar, Text, Button, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 import useUserActions from "../../hooks/useUserActions";
 import UserNotFound from "../sides/UserNotFound";
 import Loading from "../sides/LoadingBar";
 import { useState } from "react";
 import UpdateUser from "./UpdateUser";
+import ConfirmationPrompt from "../sides/ConfirmationPrompt";
 
 const ViewUser = () => {
   const bgColor = useColorModeValue("white", "gray.700");
@@ -16,6 +17,7 @@ const ViewUser = () => {
     handleDelete,
   } = useUserActions();
   const [isUpdateMode, setIsUpdateMode] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   if (isLoading) return <Loading />;
   if (isError) return <UserNotFound />;
@@ -26,6 +28,13 @@ const ViewUser = () => {
 
   const handleCloseUpdate = () => {
     setIsUpdateMode(false);
+  };
+
+  const handleConfirmDelete = () => {
+    if(userData){
+    handleDelete(userData.id);
+    }
+    onClose();
   };
 
   return (
@@ -49,13 +58,18 @@ const ViewUser = () => {
             <Flex justify="space-between" mt={4}>
               <Button colorScheme="blue" onClick={handleBack}>Back</Button>
               <Button colorScheme="yellow" onClick={handleUpdate}>Update</Button>
-              <Button colorScheme="red" onClick={() => handleDelete(userData.id)}>Delete</Button>
+              <Button colorScheme="red" onClick={onOpen}>Delete</Button>
             </Flex>
           </>
         )}
         {isUpdateMode && userData && (
           <UpdateUser userData={userData} onClose={handleCloseUpdate} />
         )}
+        <ConfirmationPrompt
+          isOpen={isOpen}
+          onClose={onClose}
+          onConfirm={handleConfirmDelete}
+        />
       </Box>
     </Flex>
   );

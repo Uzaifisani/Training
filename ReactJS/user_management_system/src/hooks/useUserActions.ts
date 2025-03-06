@@ -80,9 +80,6 @@ const useUserActions = () => {
     deleteMutation.mutate(id);
   };
 
-  const handleUpdate = () => {
-    // Implement update functionality
-  };
   const onSubmitAddUser: SubmitHandler<User> = data => {
     addMutation.mutate(data);
   };
@@ -93,7 +90,6 @@ const useUserActions = () => {
     isError,
     handleBack,
     handleDelete,
-    handleUpdate,
     addMutation,
     onSubmitAddUser
   };

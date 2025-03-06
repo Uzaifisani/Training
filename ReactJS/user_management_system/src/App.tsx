@@ -6,14 +6,11 @@ import ProtectedRoute from './routes/ProtectedRoutes';
 import RegisterForm from './pages/RegisterForm';
 import ViewUser from './components/users/ViewUsers';
 import AddUser from './components/users/AddUser';
-import useFetchUsers from './hooks/useFetchUsers';
-import Loading from './components/sides/LoadingBar';
+import User from './pages/User';
 
 
 function App() {
-  const {isLoading,isError}=useFetchUsers();
-  if(isLoading) return <Loading/>;
-  if(isError) return <h2>Error in Fetching Data</h2>
+  
   return (
     <>
       <Router>
@@ -27,7 +24,7 @@ function App() {
           />
           <Route path='/dashboard/users' element={
             <ProtectedRoute>
-              <DashBoard />
+              <User/>
             </ProtectedRoute>}
           />
           <Route path='/users/:id' element={
