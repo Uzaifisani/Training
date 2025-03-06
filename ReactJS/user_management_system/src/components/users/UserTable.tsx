@@ -80,7 +80,7 @@ const UserTable = () => {
     navigate("/adduser");
   }
 
-  if (!sortedUsers.length) return <Loading />;
+  if (!users.length) return <Loading />;
 
   return (
     <Box p={6} bg={bgColor} minH="100vh">

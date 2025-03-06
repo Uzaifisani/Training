@@ -4,8 +4,8 @@ import { UserState, User } from '../types';
 export const useUserStore = create<UserState>((set) => ({
   users: [],
   addUsers: (newUsers: User[]) => {
-    set((state) => ({
-      users: [...state.users, ...newUsers],
+    set(() => ({
+      users: [ ...newUsers],
     }));
   },
   addSingleUser: (newUser: User) => {
