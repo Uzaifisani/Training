@@ -1,24 +1,26 @@
-import {create} from 'zustand';
-import { UserResponse, UserState } from '../types';
-import { userPage } from '../apis/api';
+import { create } from 'zustand';
+import { UserState, User } from '../types';
 
-
-
-export const useUserStore = create<UserState>((set, get) => ({
+export const useUserStore = create<UserState>((set) => ({
   users: [],
-  page: 1,
-  limit: 4,
-  total: 0,
-  totalPages: 0,
-  setPage: (page) => set({ page }),
-  setLimit: (limit) => set({ limit }),
-  fetchUsers: async () => {
-    const { page, limit } = get();
-    const response: UserResponse = await userPage(page, limit);
-    set({
-      users: response.data,
-      total: response.total,
-      totalPages: response.total_pages,
-    });
+  addUsers: (newUsers: User[]) => {
+    set((state) => ({
+      users: [...state.users, ...newUsers],
+    }));
+  },
+  addSingleUser: (newUser: User) => {
+    set((state) => ({
+      users: [...state.users, newUser],
+    }));
+  },
+  deleteUserFromStore: (id: number) => {
+    set((state) => ({
+      users: state.users.filter((user) => user.id !== id),
+    }));
+  },
+  updateUser: (updatedUser: User) => {
+    set((state) => ({
+      users: state.users.map((user) => (user.id === updatedUser.id ? updatedUser : user)),
+    }));
   },
 }));

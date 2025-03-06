@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   Box,
   Flex,
@@ -17,19 +17,19 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { useNavigate } from 'react-router-dom';
 
-
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-  const {logout:performLogout}=useAuthStore();
-  const navigate= useNavigate();
-  const logout=()=>{
+  const { logout: performLogout } = useAuthStore();
+  const navigate = useNavigate();
+  const logout = () => {
     performLogout();
     navigate("/");
-}
+  };
+
   return (
     <Box>
       <SidebarContent

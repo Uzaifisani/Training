@@ -1,29 +1,38 @@
 import { Box, Flex, Heading, Avatar, Text, Badge, VStack, useColorModeValue, Button, HStack, Select } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { useUserStore } from "../store/userStore";
-import Loading from "./sides/LoadingBar";
+import { useQuery } from "@tanstack/react-query";
+import { userPage } from "../../apis/api";
+import { useState, useEffect } from "react";
+import { User } from "../../types";
+import UserListSkeleton from "../sides/UserListLoader";
 
 const RecentUsers = () => {
   const bgColor = useColorModeValue("white", "gray.700");
   const textColor = useColorModeValue("gray.800", "white");
   const borderColor = useColorModeValue("gray.200", "gray.600");
+  const [pg, setPg] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(4);
+  const [users, setUsers] = useState<User[]>([]);
 
-  const { users, page, limit, totalPages, setPage, setLimit, fetchUsers } = useUserStore();
-  useEffect(() => {
-    setPage(1);
-  }, []);
-  useEffect(() => {
-    fetchUsers();
-  }, [page, limit]);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["user", pg, limit],
+    queryFn: () => userPage(pg, limit),
+  });
 
-  if (!users.length) return <Loading />;
+  useEffect(() => {
+    if (data && data.data) {
+      setUsers(data.data);
+    }
+  }, [data]);
+
+  if (isLoading) return <UserListSkeleton />;
+  if (isError) return <h1 className="text-center">Error Occurred While Fetching the Data</h1>;
 
   return (
     <>
       <Heading fontSize="xx-large" mb={4} color={textColor}>
         Dashboard
       </Heading>
-      <Box p={6} maxW="800px" bg={bgColor} boxShadow="md" borderRadius="lg">
+      <Box p={6} maxW="1000px" bg={bgColor} boxShadow="md" borderRadius="lg">
         <Heading fontSize="xl" mb={4} color={textColor}>
           Recent Users
         </Heading>
@@ -42,11 +51,11 @@ const RecentUsers = () => {
           ))}
         </VStack>
         <HStack mt={4} justifyContent="space-between">
-          <Button onClick={() => setPage(Math.max(page - 1, 1))} isDisabled={page === 1}>
+          <Button onClick={() => setPg((prev) => Math.max(prev - 1, 1))} isDisabled={pg === 1}>
             Previous
           </Button>
-          <Text>Page {page}</Text>
-          <Button onClick={() => setPage(page + 1)} isDisabled={page === totalPages}>
+          <Text>Page {pg}</Text>
+          <Button onClick={() => setPg((prev) => prev + 1)} isDisabled={users.length < limit}>
             Next
           </Button>
         </HStack>

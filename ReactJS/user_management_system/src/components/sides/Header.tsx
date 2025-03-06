@@ -23,21 +23,21 @@ import {
 import { useAuthStore } from '../../store/authStore';
 import { useNavigate } from 'react-router-dom';
 
-
 interface HeaderProps {
     onOpen: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onOpen })=>{
+const Header: React.FC<HeaderProps> = ({ onOpen }) => {
     const { colorMode, toggleColorMode } = useColorMode();
-    const {logout:performLogout}=useAuthStore();
-    const navigate= useNavigate();
-    const {user} = useAuthStore();
+    const { logout: performLogout } = useAuthStore();
+    const navigate = useNavigate();
+    const { user } = useAuthStore();
 
-    const logout=()=>{
+    const logout = () => {
         performLogout();
         navigate("/");
     }
+
   return (
     <Box>
       <Flex
@@ -109,4 +109,4 @@ const Header: React.FC<HeaderProps> = ({ onOpen })=>{
   )
 }
 
-export default Header
+export default Header;
