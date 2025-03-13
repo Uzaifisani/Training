@@ -1,3 +1,6 @@
+Login Credentials:
+Email:eve.holt@reqres.in
+Password:cityslicka
 
 
 https://github.com/user-attachments/assets/6e11f925-10bc-442a-8850-3256788a21e5
